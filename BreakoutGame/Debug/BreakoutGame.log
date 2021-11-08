@@ -1,0 +1,3 @@
+﻿  The system cannot find the path specified.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(149,5): error MSB3073: The command "copy "C:\Users\NS\source\repos\BreakoutGame\Dependencies\freeglut\bin\Win32\freeglut.dll" "C:\Users\NS\source\repos\BreakoutGame\Debug\"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(149,5): error MSB3073: :VCEnd" exited with code 1.
