@@ -127,13 +127,20 @@ void SetNewBallPos() {
 		theBall.direction = (theBall.direction + 90) % 360;
 	}
 
+	bool isGameWon = true;
 	for (int i = 0; i < 100; i++) {
-		if (!bricks[i].isBroken) {	
+		if (!bricks[i].isBroken) {
+			isGameWon = false;
 			if (CheckCollision(bricks[i])) {
 				//cout << distance(bricks[i]) << endl;
 				bricks[i].isBroken = true;
 			}			
 		}
+	}
+
+	if (isGameWon) {
+		cout << "Congratulations you won the game!!" << endl;
+		exit(1);
 	}
 }
 
@@ -224,7 +231,7 @@ void PrintableKeys(unsigned char key, int x, int y) {
 	}
 	// Key a to go right
 	else if (key == 100) {
-		if (theBar.x1 != 1000) {
+		if (theBar.x2 != 1000) {
 			theBar.x1 += 10;
 			theBar.x2 += 10;
 		}
