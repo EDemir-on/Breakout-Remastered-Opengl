@@ -71,14 +71,23 @@ bool isBallNearBar() {
 	}	
 	return false;
 }
-int distance(Brick b) {
-	int dx = max(b.x - theBall.x, theBall.x - b.x+BRICKWIDTH);
-	int dy = max(b.y - theBall.y, theBall.y - b.y + BRICKHEIGHT);
-	return sqrt(dx * dx + dy * dy);
+int distance(int x1, int y1, int x2, int y2) {
+	int result = sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+	return result;
 }
 
 bool CheckCollision(Brick b) 
 {
+	int nearestX = max(b.x, min(theBall.x, b.x + BRICKWIDTH));
+	int nearestY = max(b.y, min(theBall.y, b.y + BRICKHEIGHT));
+	if (distance(nearestX, nearestY, theBall.x, theBall.y) < theBall.radius) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	/*
 	int theBallDistanceX = abs(theBall.x - b.x);
 	int theBallDistanceY = abs(theBall.y - b.y);
 
@@ -91,6 +100,19 @@ bool CheckCollision(Brick b)
 	int cornerDistance_sq = (theBallDistanceX - BRICKWIDTH / 2)* (theBallDistanceX - BRICKWIDTH / 2) +	(theBallDistanceY - BRICKHEIGHT / 2) * (theBallDistanceY - BRICKHEIGHT / 2);
 
 	return (cornerDistance_sq <= (theBall.radius * theBall.radius));
+	*/
+}
+
+bool CheckCollisionBar(Bar b)
+{
+	int nearestX = max(b.x1, min(theBall.x, b.x2));
+	int nearestY = max(b.y1, min(theBall.y, b.y2));
+	if (distance(nearestX, nearestY, theBall.x, theBall.y) < theBall.radius) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 void SetNewBallPos() {
@@ -122,7 +144,13 @@ void SetNewBallPos() {
 	}
 
 	//if hits the bar
+	/*
 	if (theBall.y <= 36 && theBall.x >= theBar.x1 && theBall.x <= theBar.x2) {
+		cout << "Ball near bar" << endl;
+		theBall.direction = (theBall.direction + 90) % 360;
+	}
+	*/
+	if(CheckCollisionBar(theBar)) {
 		cout << "Ball near bar" << endl;
 		theBall.direction = (theBall.direction + 90) % 360;
 	}
@@ -134,6 +162,7 @@ void SetNewBallPos() {
 			if (CheckCollision(bricks[i])) {
 				//cout << distance(bricks[i]) << endl;
 				bricks[i].isBroken = true;
+				theBall.direction = (theBall.direction + 90) % 360;
 			}			
 		}
 	}
